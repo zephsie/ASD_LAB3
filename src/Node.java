@@ -5,8 +5,6 @@ public class Node<T> {
     private Node<T> right;
     private boolean isRightThreaded;
 
-    private boolean isUsed;
-
     public Node(T value) {
         this.value = value;
     }
@@ -51,18 +49,10 @@ public class Node<T> {
         return isRightThreaded;
     }
 
-    public boolean isUsed() {
-        return isUsed;
-    }
-
-    public void setUsed(boolean used) {
-        isUsed = used;
-    }
-
     private StringBuilder toString(StringBuilder prefix, boolean isTail, StringBuilder sb) {
-        if (right != null && !this.isRightThreaded) right.toString(new StringBuilder().append(prefix).append(isTail ? "│   " : "    "), false, sb);
+        if (right != null && !isRightThreaded) right.toString(new StringBuilder().append(prefix).append(isTail ? "│   " : "    "), false, sb);
 
-        sb.append(prefix).append(isTail ? "└── " : "┌── ").append(this.isMarked || this.isRightThreaded ? "[" + value + "]" : value).append("\n");
+        sb.append(prefix).append(isTail ? "└── " : "┌── ").append(isMarked || isRightThreaded ? "[" + value + "]" : value).append("\n");
 
         if (left != null) left.toString(new StringBuilder().append(prefix).append(isTail ? "    " : "│   "), true, sb);
 
@@ -71,6 +61,6 @@ public class Node<T> {
 
     @Override
     public String toString() {
-        return this.toString(new StringBuilder(), true, new StringBuilder()).toString();
+        return toString(new StringBuilder(), true, new StringBuilder()).toString();
     }
 }
